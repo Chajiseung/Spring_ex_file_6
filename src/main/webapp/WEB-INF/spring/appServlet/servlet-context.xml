@@ -19,7 +19,14 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1"/>
 	</beans:bean>
+	
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"/>
+	</beans:bean>
+	
+	<beans:bean class="com.choa.file.DownLoad" id="download"></beans:bean>
 	
 	<context:component-scan base-package="com.choa.ex6" />
 	<context:component-scan base-package="com.choa.notice"/>

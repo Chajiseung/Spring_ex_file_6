@@ -1,8 +1,11 @@
 package com.choa.ex6;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,13 +20,65 @@ import com.choa.file.FileDTO;
 import com.choa.file.FileService;
 import com.choa.file.MultiFileDTO;
 import com.choa.file.SameMultiFileDTO;
+import com.choa.util.SeDTO;
 
 @Controller
 @RequestMapping(value="/file/**")
 public class FileController {
 	
+	//SmartEditor
+	@RequestMapping(value="seUpload", method=RequestMethod.POST)
+	public String seUpload(SeDTO seDTO, HttpSession session) throws Exception{
+		
+		FileService fileService = new FileService();
+		return fileService.seUpload(seDTO, session);
+		
+		/*//callback
+		String callback = seDTO.getCallback();
+		
+		//callback_func
+		String cllback_func = seDTO.getCallback_func();
+		
+		//OriName
+		String original_name = seDTO.getFiledata().getOriginalFilename();
+		
+		//defaultPath
+		String defalultPath = session.getServletContext().getRealPath("resources/upload");
+		
+		File f = new File(defalultPath);
+		
+		//디렉터리가 존재 하지 않을 경우 디렉터리를 생성.
+		if(!f.exists()){
+			f.mkdirs();
+		}
+		
+		//디렉터리에 저장할 파일명
+		String realName = UUID.randomUUID().toString()+"_"+original_name;
+		
+		//디렉터리에 저장
+		seDTO.getFiledata().transferTo(new File(f, realName));
+		
+		//
+		String file_result = "&bNewLine=true&sFileName="+original_name+"&sFileURL=/ex6/resources/upload/"+realName;
+		
+		return "redirect:"+callback+"?callback_func="+cllback_func+file_result;*/
+	}
 	
-	//파일 삭제 
+	//파일 다운
+	@RequestMapping(value="fileDown",method=RequestMethod.GET)
+	public ModelAndView fileDown(String fileName, HttpSession session, String oriName){
+		String realPath = session.getServletContext().getRealPath("resources/upload");
+		File f = new File(realPath, fileName);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("download");
+		mv.addObject("oriName", oriName);
+		mv.addObject("downLoadFile", f);
+		
+		return mv;
+	}
+	
+	
+	//파일 삭제
 	@RequestMapping(value="fileDelete",method=RequestMethod.GET)
 	public void fileDelete(String fileName, HttpSession session)throws Exception{
 		FileService f = new FileService();
@@ -34,7 +89,7 @@ public class FileController {
 	@RequestMapping(value="fileUpload", method=RequestMethod.GET)
 	public void fileUpload(){		
 	}
-	//다중 파일 업로드 -파라미터 이름을 모르거나 갯수가 유동적일때
+	//�떎以� �뙆�씪 �뾽濡쒕뱶 -�뙆�씪誘명꽣 �씠由꾩쓣 紐⑤Ⅴ嫄곕굹 媛��닔媛� �쑀�룞�쟻�씪�븣
 	@RequestMapping(value="upload", method=RequestMethod.POST)	
 	public void upload(MultipartHttpServletRequest request){
 		
@@ -51,7 +106,7 @@ public class FileController {
 	}
 	
 	
-	//다중 파일 업로드 -파라미터 이름이 같을때 
+	//�떎以� �뙆�씪 �뾽濡쒕뱶 -�뙆�씪誘명꽣 �씠由꾩씠 媛숈쓣�븣 
 	@RequestMapping(value="sameMultiFileUpload", method=RequestMethod.POST)	
 	public void sameMultiFileUpload(MultipartHttpServletRequest request){
 		List<MultipartFile> ar =request.getFiles("f1");
@@ -76,7 +131,7 @@ public class FileController {
 		
 	}
 	
-	//다중 파일 업로드 -파라미터 이름이 다를때
+	//�떎以� �뙆�씪 �뾽濡쒕뱶 -�뙆�씪誘명꽣 �씠由꾩씠 �떎瑜쇰븣
 	@RequestMapping(value="multiFileUpload", method=RequestMethod.POST)
 	public void multiFileUpload(MultipartHttpServletRequest request){		
 		MultipartFile f1 = request.getFile("f1");
@@ -93,7 +148,7 @@ public class FileController {
 		System.out.println(f2.getOriginalFilename());		
 	}
 	
-	//단일 파일 업로드
+	//�떒�씪 �뙆�씪 �뾽濡쒕뱶
 	
 	public void fileUpload(MultipartHttpServletRequest request){	}	
 	
