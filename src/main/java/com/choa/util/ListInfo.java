@@ -1,5 +1,9 @@
 package com.choa.util;
 
+import java.util.List;
+
+import com.choa.memo.MemoDTO;
+
 public class ListInfo {
 
 	private Integer curPage;
@@ -109,10 +113,11 @@ public class ListInfo {
 		}
 		return curPage;
 	}
+	
 	public void setCurPage(Integer curPage) {
-		
 		this.curPage = curPage;
 	}
+
 	public String getSearch() {
 		return search;
 	}

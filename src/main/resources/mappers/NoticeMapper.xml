@@ -25,7 +25,7 @@
   		
   	</select>
   
-  	<select id="list" resultType="com.choa.notice.NoticeDTO" parameterType="com.choa.util.ListInfo">
+  	<select id="list" resultType="NoticeDTO" parameterType="com.choa.util.ListInfo">
   		select * from 
   		(select rownum r, n.* from 
   		(select * from notice 
@@ -34,16 +34,16 @@
   		where r between #{startRow} and #{lastRow}
   	</select>
   
-  	<select id="view" resultType="com.choa.notice.NoticeDTO" parameterType="java.lang.Integer">
+  	<select id="view" resultType="NoticeDTO" parameterType="java.lang.Integer">
   		select * from notice where num=#{num}
   	</select> 	  
-  	<insert id="write" parameterType="com.choa.notice.NoticeDTO">
+  	<insert id="write" parameterType="NoticeDTO">
   		insert into notice values (notice_seq.nextval,#{writer},#{title},#{contents},sysdate, 0)
   	</insert>
   	<delete id="delete" parameterType="java.lang.Integer">
   		delete notice where num=#{num}
   	</delete>
-  	<update id="update" parameterType="com.choa.notice.NoticeDTO">
+  	<update id="update" parameterType="NoticeDTO">
   		update notice set title=#{title},contents=#{contents} where num=#{num}
   	</update>
   	
