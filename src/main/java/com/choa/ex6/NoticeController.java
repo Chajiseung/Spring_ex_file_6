@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ import com.choa.util.RowMaker;
 @RequestMapping(value="/notice/**")
 public class NoticeController {
 	
-	@Inject  //type으로 찾음
+	@Inject  //type�쑝濡� 李얠쓬
 	private NoticeServiceImpl noticeService;
 	
 
@@ -36,6 +37,8 @@ public class NoticeController {
 		
 		System.out.println(listInfo.getCurPage());
 		List<BoardDTO> ar = noticeService.boardList(listInfo);
+		
+		System.out.println(ar.get(1000).getTitle());
 		
 		model.addAttribute("list", ar);
 		model.addAttribute("board", "notice");
@@ -111,5 +114,8 @@ public class NoticeController {
 	
 		return "redirect:noticeList?curPage=1";
 	}
+	
+	
+	
 
 }

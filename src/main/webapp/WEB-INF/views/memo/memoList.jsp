@@ -35,6 +35,19 @@
 	</div>
 	<div id="result"></div>
 	<button id="btnView">View</button>
+	<legund>
+	<p>1.납품자명 : <input type="text" placeholder="name"></p>
+	<ul>
+		<li>상품명: <input list="dog1004">
+				  <datalist id="dog1004">
+				  	<option label="도그1004">dog1004</option>
+				  	<option label="고양이치킨">catchicken</option>
+				  	<option label="우유">milk</option>
+				  </datalist>
+		<textarea></textarea>
+		<button>sendmessage</button>
+		
+	</ul>
 
 </body>
 </html>
