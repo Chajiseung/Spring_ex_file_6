@@ -3,6 +3,7 @@ package com.choa.table;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TableService {
@@ -10,6 +11,8 @@ public class TableService {
 	@Inject
 	private TableDAO tableDAO;
 	
+	
+	@Transactional
 	public int insertTable(TableADTO tableADTO, int num) throws Exception{
 		
 		tableDAO.insertTableA(tableADTO);
